@@ -1,6 +1,7 @@
 const express = require('express');
 const puppeteer = require('puppeteer');
-const dotenv = require("dotenv").config();
+const dotenv = require('dotenv').config();
+const nodeCron = require('node-cron');
 
 const app = express();
 const port = process.env.PORT || 3000;
@@ -10,13 +11,13 @@ app.get('/', (req, res) => {
 });
 
 app.listen(port, () => {
-    initialisePuppeteer();
+    withdraw();
     console.log(`server is running on port: ${port}`);
 });
 
 const url = 'https://livent.ltd/';
 
-const initialisePuppeteer = async () => {
+const withdraw = async () => {
     try{
         const browser = await puppeteer.launch({
             headless: false,
@@ -60,4 +61,6 @@ const initialisePuppeteer = async () => {
         console.log(err);
     }
 
-}
+};
+
+nodeCron.schedule('0 18 */3 * *', withdraw); //Runs every 3 days at 18:00;
