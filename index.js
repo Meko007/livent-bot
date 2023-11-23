@@ -55,7 +55,7 @@ const initialisePuppeteer = async () => {
 
         await page.waitForTimeout(5000);
 
-        browser.close();
+        await browser.close();
     }catch(err){
         console.log(err);
     }
